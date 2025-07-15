@@ -1,31 +1,31 @@
 const express = require('express')
 const connectDB = require("./config/database.js")
 require('dotenv').config();
-const User = require("./models/userSchema.js")
-
+const cookieParser = require("cookie-parser")
 
 const app = express();
+//this is the middleware provided by the express to read the json formate of input
+app.use(express.json())
+app.use(cookieParser())
+
 const PORT = 3000;
+
+
+const authRouter = require("./Router/auth.js")
+const profileRouter = require ("./Router/profile.js")
+const requestRouter = require ("./Router/request.js");
+const userRouter = require('./Router/user.js');
+
+app.use("/", authRouter)
+app.use("/", profileRouter)
+app.use("/", requestRouter)
+app.use("/", userRouter)
 
 connectDB()
 
 
 
-app.post("/signup", async (req, res) => {
-    //created new instance of the user model
-    const user = new User({
-        firstName: "Suman",
-        lastName: "Kumar",
-        emailId: "abc@gmail.com",
-        password: "12345678",
-    });
-    try {
-        await user.save();
-        res.send("User added successfully");
-    } catch (error) {
-        res.status(400).send("Error in saving user" + error.message)
-    }
-})
+
 
 // request handler go to browser and type url localhost:3000/test
 // app.use("/test", (req, res) => {
