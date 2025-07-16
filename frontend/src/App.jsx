@@ -1,9 +1,24 @@
 import React from 'react'
-import Navbar from "./Components/Navbar"
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Body from './Components/Body'
+import Login from './Components/Login'
+import Profile from './Components/Profile'
+
+
 const App = () => {
   return (
     <div>
-      <Navbar />
+
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Body />} >
+          {/* children routes of Body  */}
+            <Route path='/login' element={<Login/>}  />
+            <Route path='/profile' element={<Profile/>} />
+            <Route path='/profile' element={<Profile/>} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
