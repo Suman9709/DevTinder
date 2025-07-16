@@ -1,0 +1,3 @@
+- create a vite +React application
+- remove unnecessary files like app.css,  assest
+- 
