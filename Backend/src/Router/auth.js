@@ -86,7 +86,7 @@ authRouter.post("/login", async (req, res) => {
             res.cookie("token", token, {
                 expires: new Date(Date.now() + 8 * 360000)//it will expire in 8hr
             })
-            res.send("User login successful")
+            res.send(user)
         }
         else {
             throw new Error("password is not correct")
