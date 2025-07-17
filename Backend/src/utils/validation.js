@@ -19,12 +19,56 @@ const validateSignupData = (req) => {
 
 
 const validateEditProfileData = (req) => {
+  const allowedEditFields = [
+    "firstName",
+    "lastName",
+    "emailId",
+    "age",
+    "description",
+    "gender",
+    "imageUrl",
+    "skills",
+  ];
 
-    const allowedEditFileds = ["firstName", "lastName", "emailId", "age", "descriptio", "gender"];
+  const body = req.body;
 
-    const isEditAllowed = Object.keys(req.body).every((field) => allowedEditFileds.includes(field))
-    return isEditAllowed;
-}
+  // 1. All keys must be allowed
+  const isEditAllowed = Object.keys(body).every((field) =>
+    allowedEditFields.includes(field)
+  );
+
+  if (!isEditAllowed) return false;
+
+  // 2. If emailId is being updated, validate it
+  if (body.emailId && !validator.isEmail(body.emailId)) {
+    return false;
+  }
+
+  // 3. If age is present, make sure it's a number string and >= 18
+  if (body.age && (!/^\d+$/.test(body.age) || parseInt(body.age) < 18)) {
+    return false;
+  }
+
+  // 4. If gender is present, validate its value
+  if (
+    body.gender &&
+    !["Male", "Female", "Others"].includes(body.gender)
+  ) {
+    return false;
+  }
+
+  // 5. If firstName or lastName exists, check length
+  if (body.firstName && body.firstName.length < 2) {
+    return false;
+  }
+
+  if (body.lastName && body.lastName.length < 2) {
+    return false;
+  }
+
+  return true;
+};
+
 
 
 

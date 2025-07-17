@@ -39,10 +39,14 @@ const Body = () => {
     }, [])
 
     return (
-        <div>
-            <Navbar />
-            <Outlet />  {/*any children route will render over here*/}
-            <Footer />
+        <div className="min-h-screen flex flex-col">
+            <div className="flex-grow">
+                <Navbar />
+                <Outlet />  {/*any children route will render over here*/}
+            </div>
+            <div>
+                <Footer />
+            </div>
         </div>
     )
 }

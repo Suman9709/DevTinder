@@ -26,7 +26,7 @@ const Navbar = () => {
 
     return (
 
-        <div className="navbar bg-base-300">
+        <div className="navbar bg-base-300 fixed top-0 z-20">
             <div className="flex-1">
                 <Link to={"/"} className="btn btn-ghost text-xl">🧑‍💻Tinder</Link>
             </div>
@@ -36,7 +36,7 @@ const Navbar = () => {
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 h-10 rounded-full border-2 border-white">
                             <span className="text-lg font-semibold flex w-full h-full items-center justify-center  leading-none">
-                                {user.firstName[0]}
+                                {user.firstName[0].toUpperCase()}
                             </span>
                         </div>
                     </div>
@@ -51,7 +51,7 @@ const Navbar = () => {
 
                             </Link>
                         </li>
-                        <li><a>Settings</a></li>
+                        <li><Link to={"/connections"}>Connections</Link></li>
                         <li><a onClick={handleLogout}>Logout</a></li>
                     </ul>
                 </div>

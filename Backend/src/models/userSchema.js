@@ -25,14 +25,14 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     age: {
-        type: Number,
+        type: String,
         min: 18,
     },
     gender: {
         type: String,
-        enum:{
-            values:["Male", "Female", "Others"],
-            message:`{VALUE} is not a valid gender type`
+        enum: {
+            values: ["Male", "Female", "Others"],
+            message: `{VALUE} is not a valid gender type`
         },
         // validate(value) {
         //     if (!["Male", "Female", "Others"].includes(value)) {
@@ -44,8 +44,17 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "This is description",
     },
-    skills:{
-        type:String,
+    skills: {
+        type: String,
+    },
+    imageUrl: {
+        type: String,
+        default: "https://geographyandyou.com/images/user-profile.png",
+        // validate(value) {
+        //     if (!validator.isURL(value)) {
+        //         throw new Error("Invalid Photo URL: " + value);
+        //     }
+        // },
     },
 
 
@@ -66,7 +75,7 @@ userSchema.methods.validatePassword = async function (passwordInputByUser) {
 
 userSchema.methods.getJWT = async function () {
     const user = this;
-    
+
     const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET_KEY, {
         expiresIn: process.env.JWT_SECRET_KEY_EXPIRY
     });
