@@ -1,8 +1,84 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect } from 'react'
+import { BASE_URL } from './constant'
+import { useDispatch, useSelector } from 'react-redux'
+import { addRequest } from '../Utils/requestSlice'
 
 const Requests = () => {
+  const dispatch = useDispatch();
+  const requests = useSelector((store) => store.requests)
+
+  const fetchRequest = async () => {
+    try {
+      const response = await axios.get(BASE_URL + "/user/request/received", {
+        withCredentials: true,
+      });
+      // console.log("response request", response.data);
+
+      dispatch(addRequest(response?.data.data));
+
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchRequest();
+  }, [])
+
+  if (!requests) return;
+  if (requests.length === 0) {
+    return <h1 className="text-center my-24 text-xl font-bold">No Request Found</h1>;
+  }
+
   return (
-    <div>Requests</div>
+    <div className="min-h-screen bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold text-center text-primary my-16">Your Connection Requests</h2>
+
+        {requests.length === 0 ? (
+          <p className="text-center text-gray-500 text-lg">No Connections Found</p>
+        ) : (
+          <div className="space-y-2">
+            {requests.map((request) => {
+              const { _id, firstName, lastName, age, gender, description, imageUrl } = request.fromUserId;
+
+              return (
+                <div
+                  key={_id}
+                  className="flex p-4 bg-base-300 shadow-md hover:shadow-md transition duration-300 rounded-xl w-1/2 mx-auto "
+                >
+                  <img
+                    src={imageUrl}
+                    alt="profile"
+                    className="w-20 h-16 rounded-full object-cover border-4 border-primary"
+                  />
+
+                  <div className="ml-6 w-full flex justify-between items-center">
+                    <div className="flex justify-between items-center flex-wrap gap-2">
+                      <h3 className="text-xl font-semibold text-white">{firstName} {lastName}</h3>
+                      {age && gender && (
+                        <p className="text-sm text-white italic">{gender}, Age {age}</p>
+                      )}
+                      {
+                        description && (
+                          <p>{description}</p>
+                        )
+                      }
+                    </div>
+                    <div className=' flex gap-2'>
+                      <button className="btn btn-primary">Accept</button>
+                      <button className="btn btn-secondary">Reject</button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
