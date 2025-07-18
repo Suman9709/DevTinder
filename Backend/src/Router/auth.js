@@ -35,7 +35,7 @@ authRouter.post("/signup", async (req, res) => {
         validateSignupData(req)
 
         // Encrypt the password
-        const { firstName, lastName, emailId, password,age,gender,skills, description,imageUrl } = req.body
+        const { firstName, lastName, emailId, password, age, gender, skills, description, imageUrl } = req.body
         const passwordHash = await bcrypt.hash(password, 10)
         console.log("Hash password", passwordHash);
 
@@ -53,8 +53,20 @@ authRouter.post("/signup", async (req, res) => {
             imageUrl,
 
         })
-        await user.save();
-        res.send("User added successfully");
+        const savedUser = await user.save();
+        //create a jwt token
+        const token = await savedUser.getJWT()
+        console.log("token", token);
+
+        //add the token to cookies and send the response back to the user
+        // res.cookie("token", "sdfghjktryuibvnm") //test
+        res.cookie("token", token, {
+            expires: new Date(Date.now() + 8 * 360000)//it will expire in 8hr
+        })
+        res.json({
+            message: "User added successfully",
+            data: savedUser,
+        });
     } catch (error) {
         res.status(400).send("Error in saving user" + error.message)
     }

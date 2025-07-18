@@ -79,16 +79,16 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
 })
 
 //Feed API -GET/feed -get all the user from the database
-profileRouter.get("/feed", async (req, res) => {
+// profileRouter.get("/feed", async (req, res) => {
 
-    try {
-        const users = await User.find({})
-        res.send(users)
-    } catch (error) {
-        res.status(400).send("something went wring")
+//     try {
+//         const users = await User.find({})
+//         res.send(users)
+//     } catch (error) {
+//         res.status(400).send("something went wring")
 
-    }
-})
+//     }
+// })
 
 //delete user form the database
 profileRouter.delete("/delete", async (req, res) => {
