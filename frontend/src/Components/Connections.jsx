@@ -32,33 +32,39 @@ const Connections = () => {
   return (
     <div className="min-h-screen bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-primary my-20">Your Connections</h2>
+        <h2 className="text-3xl font-bold text-center text-primary my-16">Your Connections</h2>
 
         {connections.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">No Connections Found</p>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-2">
             {connections.map((connection) => {
               const { _id, firstName, lastName, age, gender, description, imageUrl } = connection;
 
               return (
                 <div
                   key={_id}
-                  className="flex items-center p-6 bg-white shadow-lg rounded-2xl hover:shadow-xl transition-shadow duration-300 text-black"
+                  className="flex p-4 bg-base-300 shadow-md hover:shadow-md transition duration-300 rounded-xl w-1/2 mx-auto"
                 >
                   <img
-                    alt="profile"
-                    className="w-20 h-20 rounded-full object-cover border-2 border-primary"
                     src={imageUrl}
+                    alt="profile"
+                    className="w-20 h-16 rounded-full object-cover border-4 border-primary"
                   />
-                  <div className="ml-6 flex justify-center">
-                    <h3 className="text-2xl font-semibold text-gray-800">{firstName + " " + lastName}</h3>
-                    {age && gender && (
-                      <p className="text-sm text-gray-500">{gender}, Age {age}</p>
-                    )}
-                   
-                      {description && (<p className="mt-1 text-sm text-gray-600">{description}</p>)}
-                    
+
+                  <div className="ml-6 w-full">
+                    <div className="flex justify-between items-center flex-wrap gap-2">
+                      <h3 className="text-xl font-semibold text-white">{firstName} {lastName}</h3>
+                      {age && gender && (
+                        <p className="text-sm text-white italic">{gender}, Age {age}</p>
+                      )}
+                      {
+                        description && (
+                          <p>{description}</p>
+                        )
+                      }
+                    </div>
+
                   </div>
                 </div>
               );
@@ -67,6 +73,7 @@ const Connections = () => {
         )}
       </div>
     </div>
+
   );
 
 };
