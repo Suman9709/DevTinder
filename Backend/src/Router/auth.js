@@ -37,7 +37,7 @@ authRouter.post("/signup", async (req, res) => {
         // Encrypt the password
         const { firstName, lastName, emailId, password, age, gender, skills, description, imageUrl } = req.body
         const passwordHash = await bcrypt.hash(password, 10)
-        console.log("Hash password", passwordHash);
+        // console.log("Hash password", passwordHash);
 
 
         //new instance of user
@@ -56,7 +56,7 @@ authRouter.post("/signup", async (req, res) => {
         const savedUser = await user.save();
         //create a jwt token
         const token = await savedUser.getJWT()
-        console.log("token", token);
+        console.log("SignUp token", token);
 
         //add the token to cookies and send the response back to the user
         // res.cookie("token", "sdfghjktryuibvnm") //test
@@ -92,11 +92,11 @@ authRouter.post("/login", async (req, res) => {
 
             //create a jwt token
             const token = await user.getJWT()
-            console.log("token", token);
+            console.log("Login token", token);
 
             //add the token to cookies and send the response back to the user
             // res.cookie("token", "sdfghjktryuibvnm") //test
-            res.cookie("token", token, {
+            res.cookie("Login after wraping in to cookies token", token, {
                 expires: new Date(Date.now() + 8 * 360000)//it will expire in 8hr
             })
             res.send(user)
@@ -114,7 +114,7 @@ authRouter.post("/login", async (req, res) => {
 
 //logout
 authRouter.post("/logout", async (req, res) => {
-    res.cookie("token", null, {
+    res.cookie(" logout token", null, {
         expires: new Date(Date.now())
     });
     res.send("Logout successful");
