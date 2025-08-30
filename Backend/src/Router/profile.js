@@ -14,7 +14,7 @@ profileRouter.get("/profile/view", userAuth, async (req, res) => {
         // if (!token) {
         //     throw new Error("Invalid token")
         // }
-        // //validate token
+        //validate token
         // const isValidToken = await jwt.verify(token, process.env.JWT_SECRET_KEY) //this gives a decode mesaage that is id
         // const { _id } = isValidToken
         // console.log("Logged in user id is" + _id);

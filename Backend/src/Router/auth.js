@@ -96,9 +96,16 @@ authRouter.post("/login", async (req, res) => {
 
             //add the token to cookies and send the response back to the user
             // res.cookie("token", "sdfghjktryuibvnm") //test
-            res.cookie("Login after wraping in to cookies token", token, {
-                expires: new Date(Date.now() + 8 * 360000)//it will expire in 8hr
-            })
+            // res.cookie("Login after wraping in to cookies token", token, {
+            //     expires: new Date(Date.now() + 8 * 360000)//it will expire in 8hr
+            // })
+
+            res.cookie("token", token, {
+                expires: new Date(Date.now() + 8 * 60 * 60 * 1000), // 8 hours
+                httpOnly: true, // more secure (client JS can't access)
+
+            });
+
             res.send(user)
         }
         else {
@@ -114,9 +121,11 @@ authRouter.post("/login", async (req, res) => {
 
 //logout
 authRouter.post("/logout", async (req, res) => {
-    res.cookie(" logout token", null, {
-        expires: new Date(Date.now())
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true
     });
+
     res.send("Logout successful");
 })
 

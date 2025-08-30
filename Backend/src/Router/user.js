@@ -38,33 +38,36 @@ userRouter.get("/user/connection", userAuth, async (req, res) => {
         { toUserId: loggedInUser._id, status: "accepted" },
         { fromUserId: loggedInUser._id, status: "accepted" },
       ],
-    }).populate("fromUserId", "firstName lastName")
-      .populate("toUserId", "firstName lastName").lean();
+    })
+      .populate("fromUserId", "firstName lastName")
+      .populate("toUserId", "firstName lastName")
+      
 
     const data = connectionRequest.map((row) => {
+      let user;
 
-      // if (row.fromUserId._id.toString() === loggedInUser._id.toString()) {
-      //     return row.toUserId;
-      // }
-      return row.fromUserId
-    }); //this will only gives the fromUserId data if i dont need toUserId data and status and all 
+      if (row.fromUserId._id.toString() === loggedInUser._id.toString()) {
+        user = row.toUserId;
+      } else {
+        user = row.fromUserId;
+      }
 
-    // const data = connectionRequest.map((row) => {
-    //     if (row.fromUserId._id.toString() === loggedInUser._id.toString()) {
-    //         return row.toUserId;
-    //     } else {
-    //         return row.fromUserId;
-    //     }
-    // });
+      return {
+         _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      };
+    });
+
     res.json({
-      message: "Connection fetch successfully",
-      data: data,
-    })
-
+      message: "Connection fetched successfully",
+      data,
+    });
   } catch (error) {
-    res.status(400).send("Error: " + error.message)
+    res.status(400).send("Error: " + error.message);
   }
-})
+});
+
 
 //feed api
 

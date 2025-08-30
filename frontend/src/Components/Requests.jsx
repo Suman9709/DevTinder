@@ -55,13 +55,13 @@ const Requests = () => {
         ) : (
           <div className="space-y-2">
             {requests.map((request) => {
-              const { _id, firstName, lastName, age, gender, description, imageUrl } = request.fromUserId;
+                
+              const user = request.fromUserId;
+              if (!user) return null;
+              const { _id, firstName, lastName, age, gender, description, imageUrl } = user;
 
               return (
-                <div
-                  key={_id}
-                  className="flex p-4 bg-base-300 shadow-md hover:shadow-md transition duration-300 rounded-xl w-1/2 mx-auto "
-                >
+                <div key={request._id} className="flex p-4 bg-base-300 shadow-md hover:shadow-md transition duration-300 rounded-xl w-1/2 mx-auto ">
                   <img
                     src={imageUrl}
                     alt="profile"
@@ -74,20 +74,17 @@ const Requests = () => {
                       {age && gender && (
                         <p className="text-sm text-white italic">{gender}, Age {age}</p>
                       )}
-                      {
-                        description && (
-                          <p>{description}</p>
-                        )
-                      }
+                      {description && <p>{description}</p>}
                     </div>
-                    <div className=' flex gap-2'>
-                      <button className="btn btn-primary" onClick={() => reviewRequest("accepted", request._id)} >Accept</button>
+                    <div className="flex gap-2">
+                      <button className="btn btn-primary" onClick={() => reviewRequest("accepted", request._id)}>Accept</button>
                       <button className="btn btn-secondary" onClick={() => reviewRequest("rejected", request._id)}>Reject</button>
                     </div>
                   </div>
                 </div>
               );
             })}
+
           </div>
         )}
       </div>

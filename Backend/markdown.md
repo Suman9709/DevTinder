@@ -70,3 +70,14 @@ group multiple routes under respective router
 read documentatio for express.Router
 create routes folder for managinf different routes
 import those routes in app.js 
+
+
+
+# Real time cat using websocket
+ - Build the ui for a chat window on /chat/:targetUserId
+ - setup socket.io
+ - 
+ - import http
+ - create server
+ - socket
+ - io
