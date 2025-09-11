@@ -9,7 +9,7 @@ const http = require('http');
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:process.env.CORS_ORGIN  ,
+    origin:process.env.CORS_ORGIN || "https://web-tinder-5v3c.vercel.app" ,
     credentials: true,
 }))
 const PORT = 3000;
