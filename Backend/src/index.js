@@ -48,7 +48,20 @@ connectDB()
 
 // })
 
+app.get('/', (req, res) => {
+    res.send('Welcome to WebTinder API');
+});
 
+
+const API_PING_URL = 'https://webtinder-1.onrender.com/ping'
+// const API_PING_URL = 'http://localhost:3000/ping'
+
+
+setInterval(() => {
+    fetch(API_PING_URL)
+        .then(response => console.log("Self-ping successful:", response.status))
+        .catch(error => console.error("Self-ping failed:", error));
+}, 1000)
 
 server.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
