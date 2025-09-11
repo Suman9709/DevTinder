@@ -6,6 +6,7 @@ import { BASE_URL } from './constant'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../Utils/userSlice'
+import Login from './Login'
 
 
 
@@ -37,6 +38,9 @@ const Body = () => {
 
         fetchUser()
     }, [])
+     if (!userData?.emailId) {
+        return <Login />;
+    }
 
     return (
         <div className="min-h-screen flex flex-col">

@@ -17,10 +17,10 @@ const App = () => {
 
         <BrowserRouter basename="/">
           <Routes>
+            <Route path='/login' element={<Login />} />
+            {/* children routes of Body  */}
             <Route path="/" element={<Body />} >
-              {/* children routes of Body  */}
               <Route path='/' element={<Feed />} />
-              <Route path='/login' element={<Login />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/connections' element={<Connections />} />
               <Route path='/requests' element={<Requests />} />
