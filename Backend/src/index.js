@@ -9,7 +9,7 @@ const http = require('http');
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "http://localhost:5173"|| process.env.CORS ||" https://webtinder-1.onrender.com" ,
+    origin:process.env.CORS_ORGIN  ,
     credentials: true,
 }))
 const PORT = 3000;
